@@ -20,7 +20,7 @@ import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
  */
 public class PedidoRepository {
 
-    private DataBase dataBase = new DataBase();
+    private final DataBase dataBase = new DataBase();
 
     /**
      * Metodo para guardar pedidos en la BD
@@ -49,12 +49,25 @@ public class PedidoRepository {
         return pedidiosBD;
     }
 
+    /**
+     * Metodo para encontar un pedido en la BD por su id
+     *
+     * @param conexion conexion ODB
+     * @param id
+     * @return
+     */
     public Pedido findOneById(ODB conexion, String id) {
-        System.out.println("el id es " + id );
+        System.out.println("el id es " + id);
         IQuery query = new CriteriaQuery(Pedido.class, Where.equal("idPedido", id));
         return (Pedido) conexion.getObjects(query).getFirst();
     }
 
+    /**
+     * Metodo para upDate un pedido
+     *
+     * @param conexion conexion ODB
+     * @param pedido clase pedido que se va a aactualizar
+     */
     public void upDate(ODB conexion, Pedido pedido) {
         conexion.store(pedido);
         conexion.commit();

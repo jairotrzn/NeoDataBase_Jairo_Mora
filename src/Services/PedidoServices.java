@@ -61,18 +61,33 @@ public class PedidoServices {
         return pedidoRepository.getAll();
     }
 
+    /**
+     * Almacena los pedidos que trae el RabbitMq
+     *
+     * @return ArrayList con los pedidos
+     * @throws IOException
+     * @throws TimeoutException
+     * @throws InterruptedException
+     * @throws NullPointerException
+     */
     public ArrayList<Pedido> consumerRabbit() throws IOException, TimeoutException, InterruptedException, NullPointerException {
 
         return rabbitServices.consumerProducer();
 
     }
 
-    public void upData(ODB conexion,String id, String nuevoEstado) {
-        System.out.println("Estoy en el services");
-        Pedido pedido = pedidoRepository.findOneById(conexion,id);
-        System.out.println("datos " + pedido.toString());
+    /**
+     * Update de los pedidos tras modificar el estado
+     *
+     * @param conexion conexion ODB
+     * @param id identificador del pedido que se va a modificar
+     * @param nuevoEstado nuevo estado al que cambia
+     */
+    public void upData(ODB conexion, String id, String nuevoEstado) {
+
+        Pedido pedido = pedidoRepository.findOneById(conexion, id);
         pedido.setEstado(nuevoEstado);
-        pedidoRepository.upDate(conexion,pedido);
+        pedidoRepository.upDate(conexion, pedido);
     }
 
 }

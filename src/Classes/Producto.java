@@ -10,6 +10,7 @@ package Classes;
  * @author jairo
  */
 public class Producto {
+
     private String nombre;
     private float precio;
     private int stock;
@@ -46,8 +47,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "nombre = " + nombre + ", precio = " + precio + ", stock = " + stock ;
+        return "nombre = " + nombre + ", precio = " + precio + ", stock = " + stock;
     }
-    
-    
+
 }

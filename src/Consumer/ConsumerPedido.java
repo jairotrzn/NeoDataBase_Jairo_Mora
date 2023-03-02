@@ -25,21 +25,20 @@ import java.util.concurrent.TimeoutException;
 public class ConsumerPedido {
 
     private final String QUEUE_NAME = "PEDIDO";
-    private String HOST = "localhost";
+    private final String HOST = "localhost";
     private String message;
-    private ArrayList<Pedido> pedidosRabit = new ArrayList<>();
+    private final ArrayList<Pedido> pedidosRabit = new ArrayList<>();
     private final String ESTADO_PENDIENTE = "Pendiente";
 
-    
     /**
      * Metodo que lee la cola del Rabbitmq
-     * 
+     *
      * @return String con los datos leiidos
      * @throws IOException
      * @throws TimeoutException
-     * @throws InterruptedException 
+     * @throws InterruptedException
      */
-    public ArrayList<Pedido> consumerProducer() throws IOException, TimeoutException, InterruptedException,NullPointerException {
+    public ArrayList<Pedido> consumerProducer() throws IOException, TimeoutException, InterruptedException, NullPointerException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(HOST);
         Connection connection = factory.newConnection();
@@ -52,10 +51,8 @@ public class ConsumerPedido {
                 public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                     message = new String(body, "UTF-8");
                     Pedido pedido = new Gson().fromJson(message, Pedido.class);
-                    System.out.println("Estado inicial " + pedido.getEstado());
                     pedido.setEstado(ESTADO_PENDIENTE);
-                    System.out.println("Estado final " + pedido.getEstado());
-                   pedidosRabit.add(pedido);
+                    pedidosRabit.add(pedido);
                 }
             };
 
@@ -65,10 +62,8 @@ public class ConsumerPedido {
             channel.close();
             connection.close();
         }
-        System.out.println("Los nuevos pedidos son " + pedidosRabit.size());
         return pedidosRabit;
 
     }
 
-    
 }

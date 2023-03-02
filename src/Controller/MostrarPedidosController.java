@@ -24,8 +24,8 @@ public class MostrarPedidosController extends javax.swing.JFrame {
     private final String PENDIENTE = "Pendiente";
     private final String EN_CURSO = "EN_CURSO";
     private final String LISTO = "LISTO";
-     private final String IDENTIFICADOR = "Identificador: ";
-      private final String ESTADO_ACTUAL = "Estado actual: ";
+    private final String IDENTIFICADOR = "Identificador: ";
+    private final String ESTADO_ACTUAL = "Estado actual: ";
 
     /**
      * Creates new form MostrarPedidosController
@@ -37,7 +37,7 @@ public class MostrarPedidosController extends javax.swing.JFrame {
         super.setResizable(false);
         jPanelModificar.setVisible(false);
         jPanelModificar.setVisible(true);
-        llenarCobox();
+        llenarCoboxPedidos();
     }
 
     /**
@@ -180,21 +180,35 @@ public class MostrarPedidosController extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Envia a pagina principal
+     *
+     * @param evt
+     */
     private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
         super.dispose();
         Principal principal = new Principal();
     }//GEN-LAST:event_jButtonAtrasActionPerformed
-
+    /**
+     * Inicia la accion de modificar el estado de un producto
+     *
+     * @param evt
+     */
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         DataBase dataBase = new DataBase();
         ODB conexion = dataBase.open();
         String nuevoEstado = String.valueOf(jComboBoxEstado.getSelectedItem());
         pedidoServices.upData(conexion, pedidoSelected.getIdPedido(), nuevoEstado);
         dataBase.close(conexion);
-        llenarCobox();
-    }//GEN-LAST:event_jButtonModificarActionPerformed
+        refres();
 
+    }//GEN-LAST:event_jButtonModificarActionPerformed
+    /**
+     * Para ir actualizando la informacion de los pedidos mediante la variacion
+     * del combox
+     *
+     * @param evt
+     */
     private void jComboBoxPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPedidosActionPerformed
 
         pedidoSelected = pedidoServices.getAll().get(jComboBoxPedidos.getSelectedIndex());
@@ -254,7 +268,8 @@ public class MostrarPedidosController extends javax.swing.JFrame {
 /**
      * Llena combox con todos los pedidos en la bd
      */
-    private void llenarCobox() {
+    private void llenarCoboxPedidos() {
+
         for (Pedido pedidoBD : pedidoServices.getAll()) {
             jComboBoxPedidos.addItem(pedidoBD.toString());
         }
@@ -304,6 +319,12 @@ public class MostrarPedidosController extends javax.swing.JFrame {
             modelo.addElement(product.toString());
         }
         jListProductosPedido.setModel(modelo);
+    }
+
+    private void refres() {
+
+        MostrarPedidosController mostrarPedidosController = new MostrarPedidosController();
+        super.dispose();
     }
 
 }

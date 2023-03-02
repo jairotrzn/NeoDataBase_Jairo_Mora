@@ -19,15 +19,16 @@ import java.util.logging.Logger;
  * @author jairo
  */
 public class Principal extends javax.swing.JFrame {
+
     /**
      * Creates new form Principal
      */
     public Principal() {
-     
+
         initComponents();
         super.setVisible(true);
         super.setResizable(false);
-      
+
     }
 
     /**
@@ -110,14 +111,19 @@ public class Principal extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Acciona la lectura de los pedidos en Rabitmq y almacenaje en la BD de la
+     * aplicacion
+     *
+     * @param evt
+     */
     private void jButtonLeerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerPedidosActionPerformed
-       
+
         try {
             PedidoServices pedidoServices = new PedidoServices();
-            ArrayList<Pedido>orders = pedidoServices.consumerRabbit();
-            if(!orders.isEmpty()){
-               pedidoServices.save(orders);
+            ArrayList<Pedido> orders = pedidoServices.consumerRabbit();
+            if (!orders.isEmpty()) {
+                pedidoServices.save(orders);
             }
             jLabelError.setText(Translations_ES.LECTURA_FINALIZADA_CON_EXITO);
         } catch (IOException ex) {
@@ -130,12 +136,16 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-     
-    }//GEN-LAST:event_jButtonLeerPedidosActionPerformed
 
+    }//GEN-LAST:event_jButtonLeerPedidosActionPerformed
+    /**
+     * Inicia la pantalla MostrarPedidosController
+     *
+     * @param evt
+     */
     private void jButtonModificarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarPedidosActionPerformed
-      super.dispose();
-      MostrarPedidosController mostrarPedidosController = new MostrarPedidosController();
+        super.dispose();
+        MostrarPedidosController mostrarPedidosController = new MostrarPedidosController();
     }//GEN-LAST:event_jButtonModificarPedidosActionPerformed
 
     /**

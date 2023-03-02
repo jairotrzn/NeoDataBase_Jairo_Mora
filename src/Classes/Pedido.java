@@ -12,12 +12,13 @@ import java.util.ArrayList;
  * @author jairo
  */
 public class Pedido {
+
     private String emailUsuario;
-    private String idPedido;
+    private final String idPedido;
     private String estado;
-    private ArrayList<Producto> listaProductos;
-    
-    public Pedido(String email,String idPedido,ArrayList<Producto> listaProductos){
+    private final ArrayList<Producto> listaProductos;
+
+    public Pedido(String email, String idPedido, ArrayList<Producto> listaProductos) {
         this.emailUsuario = email;
         this.idPedido = idPedido;
         this.listaProductos = listaProductos;
@@ -50,12 +51,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return idPedido + " ------ " + estado ;
+        return idPedido + " ------ " + estado;
     }
 
-    
-
- 
-    
-    
 }
